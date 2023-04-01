@@ -1,11 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
-import '../model/task.dart';
+import '../model/task_data.dart';
 
 class AddTaskScreen extends StatelessWidget {
-  List<Task> tasks;
-
-  AddTaskScreen({super.key, required this.tasks});
+  AddTaskScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -41,18 +40,13 @@ class AddTaskScreen extends StatelessWidget {
               },
             ),
             TextButton(
+              onPressed: () {
+                Provider.of<TaskData>(context).addTask(newTaskTitle);
+                Navigator.pop(context);
+              },
               style: TextButton.styleFrom(
                 backgroundColor: Colors.lightBlueAccent,
               ),
-              onPressed: () {
-                tasks.add(
-                  Task(
-                    name: newTaskTitle,
-                    isDone: false,
-                  ),
-                );
-                Navigator.pop(context);
-              },
               child: const Text(
                 'Add',
                 style: TextStyle(

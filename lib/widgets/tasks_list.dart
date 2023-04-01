@@ -1,39 +1,34 @@
 import 'package:flutter/material.dart';
 import 'package:praktikum_state_mngmnt_2023/widgets/task_tile.dart';
+import 'package:provider/provider.dart';
 
-import '../model/task.dart';
+import '../model/task_data.dart';
 
-class TasksList extends StatefulWidget {
-  List<Task> tasks;
+class TasksList extends StatelessWidget {
 
-  TasksList({required this.tasks});
+  const TasksList({super.key});
 
-  @override
-  State<TasksList> createState() => _TasksListState();
-}
-
-class _TasksListState extends State<TasksList> {
   @override
   Widget build(BuildContext context) {
-    return ListView.builder(
-      itemBuilder: (context, index) {
-        final task = widget.tasks[index];
-        return TaskTile(
-          taskTitle: task.name,
-          isChecked: task.isDone,
-          checkboxCallback: (checkboxState) {
-            setState(() {
-              widget.tasks[index].toggleDone();
-            });
+    return Consumer<TaskData>(
+      builder: (context, taskData, child){
+        return ListView.builder(
+          itemBuilder: (context, index) {
+            final task = taskData.tasks[index];
+            return TaskTile(
+              taskTitle: task.name,
+              isChecked: task.isDone,
+              checkboxCallback: (checkboxState) {
+                taskData.updateTask(task);
+              },
+              longPressCallback: () {
+                taskData.deleteTask(task);
+              },
+            );
           },
-          longPressCallback: () {
-            setState(() {
-              widget.tasks.removeAt(index);
-            });
-          },
+          itemCount: taskData.taskCount,
         );
       },
-      itemCount: widget.tasks.length,
     );
   }
 }
