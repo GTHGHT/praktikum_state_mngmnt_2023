@@ -20,12 +20,12 @@ class SettingsScreen extends StatelessWidget {
                   ? Icons.dark_mode
                   : Icons.light_mode,
             ),
-            title: Text("Title"),
+            title: Text("Dark Mode"),
             trailing: Switch(
               value: Provider.of<ThemeModeData>(context).isDarkModeActive,
               onChanged: (bool value) {
                 Provider.of<ThemeModeData>(context, listen: false).changeTheme(
-                  value ? ThemeMode.light : ThemeMode.dark,
+                  value ?  ThemeMode.dark: ThemeMode.light,
                 );
               },
             ),

@@ -26,6 +26,7 @@ class MyApp extends StatelessWidget {
         builder: (context) {
           return MaterialApp(
             themeMode: Provider.of<ThemeModeData>(context).themeMode,
+            darkTheme: ThemeData.dark(useMaterial3: true),
             home: TasksScreen(),
           );
         }
